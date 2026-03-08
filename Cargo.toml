@@ -1,0 +1,18 @@
+[package]
+name = "pa053"
+version = "0.1.0"
+edition = "2024"
+
+[dependencies]
+anyhow = "1.0.102"
+ndarray = "0.17.2"
+ndarray-linalg = { version = "0.18.1", features = ["openblas-static"] }
+prost = "0.14.3"
+tokio = { version = "1.50.0", features = ["rt-multi-thread", "macros"] }
+tonic = "0.14.5"
+tonic-prost = "0.14.5"
+futures = "0.3"
+
+[build-dependencies]
+tonic-prost-build = "0.14.5"
+

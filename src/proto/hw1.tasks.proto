@@ -1,0 +1,69 @@
+syntax="proto3";
+option java_multiple_files = true;
+
+package hw1.tasks;
+
+message Response {
+    string token = 1;
+    oneof data {
+        string info = 2;
+        string error = 3;
+    }
+    reserved 4 to 6;
+    oneof task {
+        UnknownTask unknownTask = 7;
+        AdderTask adderTask = 8;
+        MatrixTask matrixTask = 9;
+    }
+}
+
+message UnknownTask {
+}
+
+message BeginData {
+    string email = 1;
+}
+
+message AdderTask {
+    int64 a = 1;
+    float b = 2;
+}
+
+message AdderTaskResponse {
+    string token = 1;
+    double result = 2;
+}
+
+message MatrixTask {
+    message Row {
+        repeated int64 values = 1;
+    }
+    repeated Row rows = 1;
+}
+
+message MatrixTaskResponse {
+    string token = 1;
+    int64 determinant = 2;
+}
+
+message FlipLineRequest {
+    string token = 1;
+}
+
+message FlipLineResponse {
+    string token = 1;
+    Point point = 2;
+}
+
+message Point {
+    sint32 x = 1;
+    sint32 y = 2;
+}
+
+service Homework {
+    rpc Begin(BeginData) returns (Response);
+    rpc Adder(AdderTaskResponse) returns (Response);
+    rpc Matrix(MatrixTaskResponse) returns (Response);
+    rpc ReadLine(FlipLineRequest) returns (stream Point);
+    rpc SendLine(stream FlipLineResponse) returns (Response);
+}
